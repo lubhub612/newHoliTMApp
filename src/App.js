@@ -1,13 +1,26 @@
-import React from 'react';
-//import { useWebApp } from '@tma.js/sdk';
-import WebApp from '@twa-dev/sdk';
+import React, { useEffect } from 'react';
 
 const App = () => {
-  //const webApp = useWebApp();
+  useEffect(() => {
+    // Initialize the Telegram Web App
+    const tg = window.Telegram.WebApp;
+
+    // Expand the mini app to full screen
+    tg.expand();
+
+    // Enable the main button (optional)
+    tg.MainButton.setText('Start bot');
+    tg.MainButton.show();
+  }, []);
 
   const handleStartButtonClick = () => {
-    // Send the /start command to the bot
-    WebApp.sendData(JSON.stringify({ command: '/start' }));
+    const tg = window.Telegram.WebApp;
+
+    // Send data to the bot
+    tg.sendData(JSON.stringify({ command: '/start' }));
+
+    // Optionally, close the mini app after sending data
+    tg.close();
   };
 
   return (
@@ -17,7 +30,7 @@ const App = () => {
         onClick={handleStartButtonClick}
         style={{ padding: '10px 20px', fontSize: '16px' }}
       >
-        Start Bot
+        Start bot
       </button>
     </div>
   );
