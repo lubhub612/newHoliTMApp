@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 const App = () => {
   useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
     // Initialize the Telegram Web App
     const tg = window.Telegram.WebApp;
 
@@ -11,9 +12,13 @@ const App = () => {
     // Enable the main button (optional)
     tg.MainButton.setText('Start bot');
     tg.MainButton.show();
+  } else {
+    console.log('This app is not running inside Telegram.');
+  }
   }, []);
 
   const handleStartButtonClick = () => {
+    if (window.Telegram && window.Telegram.WebApp) {
     const tg = window.Telegram.WebApp;
 
     // Send data to the bot
@@ -21,6 +26,9 @@ const App = () => {
 
     // Optionally, close the mini app after sending data
     tg.close();
+  } else {
+    console.log('This app is not running inside Telegram.');
+  }
   };
 
   return (
